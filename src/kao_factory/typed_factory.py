@@ -7,6 +7,10 @@ class TypedFactory:
         self.field = field
         self.valueToFactory = valueToFactory
         
+    def addFactory(self, value, factory):
+        """ Add the factory to the mapping """
+        self.valueToFactory[value] = factory
+        
     def load(self, data):
         """ Load from the given data """
         value = data[self.field]

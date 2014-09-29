@@ -32,8 +32,37 @@ suiteLoad = unittest.TestSuite(map(load, testcasesLoad))
 
 ##########################################################
 
+class addFactory(unittest.TestCase):
+    """ Test cases of addFactory """
+    
+    def  setUp(self):
+        """ Build the Factories for the test """
+        self.field = "type"
+        self.existingType = "test"
+        
+        self.expectedValues = {"arg1":1, "arg2":2, "arg3":3}
+        self.goodData = dict(self.expectedValues)
+        self.goodData[self.field] = self.existingType
+        
+        self.factory = TypedFactory(self.field, {})
+        
+    def factoryAdded(self):
+        """ Test that the object is loaded properly when the type mapping exists """
+        self.factory.addFactory(self.existingType, Factory(DummyClass, parameters))
+        result = self.factory.load(self.goodData)
+        
+        self.assertIsNotNone(result, "The result should have been loaded")
+        for key in self.expectedValues:
+            self.assertEqual(getattr(result, key), self.goodData[key], "Each field on the result should match the value in the data")
+
+# Collect all test cases in this class
+testcasesAddFactory = ["factoryAdded"]
+suiteAddFactory = unittest.TestSuite(map(addFactory, testcasesAddFactory))
+
+##########################################################
+
 # Collect all test cases in this file
-suites = [suiteLoad]
+suites = [suiteLoad, suiteAddFactory]
 suite = unittest.TestSuite(suites)
 
 if __name__ == "__main__":
