@@ -11,6 +11,10 @@ class TypedFactory:
         """ Add the factory to the mapping """
         self.valueToFactory[value] = factory
         
+    def loadAll(self, dataList):
+        """ Load the object from the given data """
+        return [self.load(data) for data in dataList]
+        
     def load(self, data):
         """ Load from the given data """
         value = data[self.field]

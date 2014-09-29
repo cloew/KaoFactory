@@ -32,6 +32,34 @@ suiteLoad = unittest.TestSuite(map(load, testcasesLoad))
 
 ##########################################################
 
+class loadAll(unittest.TestCase):
+    """ Test cases of loadAll """
+    
+    def  setUp(self):
+        """ Build the Factory for the test """
+        self.field = "type"
+        self.existingType = "test"
+        
+        self.expectedValues = [{"arg1":1, "arg2":2, "arg3":3}, {"arg1":4, "arg2":5, "arg3":6}, {"arg1":7, "arg2":8, "arg3":9}]
+        self.data = [dict(values) for values in self.expectedValues]
+        for data in self.data:
+            data[self.field] = self.existingType
+        
+        self.factory = TypedFactory(self.field, {self.existingType:Factory(DummyClass, parameters)})
+        
+    def loaded(self):
+        """ Test that the object can be loaded """
+        objects = self.factory.loadAll(self.data)
+        for object, data in zip(objects, self.expectedValues):
+            for key in data:
+                self.assertEqual(getattr(object, key), data[key], "Each field on the object should match the value in the data")
+
+# Collect all test cases in this class
+testcasesLoadAll = ["loaded"]
+suiteLoadAll = unittest.TestSuite(map(loadAll, testcasesLoadAll))
+
+##########################################################
+
 class addFactory(unittest.TestCase):
     """ Test cases of addFactory """
     
@@ -62,7 +90,7 @@ suiteAddFactory = unittest.TestSuite(map(addFactory, testcasesAddFactory))
 ##########################################################
 
 # Collect all test cases in this file
-suites = [suiteLoad, suiteAddFactory]
+suites = [suiteLoad, suiteLoadAll, suiteAddFactory]
 suite = unittest.TestSuite(suites)
 
 if __name__ == "__main__":
