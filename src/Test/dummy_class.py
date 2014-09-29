@@ -1,3 +1,4 @@
+from kao_factory.Parameter.primitive_parameter import PrimitiveParameter
 
 class DummyClass:
     """ Represents a dummy class for use in testing """
@@ -7,3 +8,6 @@ class DummyClass:
         self.arg1 = arg1
         self.arg2 = arg2
         self.arg3 = arg3
+        
+        
+parameters = [PrimitiveParameter("arg1"), PrimitiveParameter("arg2"), PrimitiveParameter("arg3")]
