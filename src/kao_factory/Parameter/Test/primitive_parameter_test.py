@@ -8,17 +8,25 @@ class getValue(unittest.TestCase):
     def  setUp(self):
         """ Build the Parameter for the test """
         self.field = "name"
+        self.otherField = "Other Field"
         self.expectedValue = "Some Value"
         self.data = {self.field:self.expectedValue}
+        
         self.parameter = PrimitiveParameter(self.field)
+        self.optionalParameter = PrimitiveParameter(self.otherField, optional=True, default=self.expectedValue)
         
     def retrieved(self):
         """ Test that the value retrieved from the parameter is correct """
         value = self.parameter.getValue(self.data)
         self.assertEqual(value, self.expectedValue, "The Value should match the expected value")
+        
+    def optionalValue(self):
+        """ Test that the value retrieved from the parameter is correct """
+        value = self.optionalParameter.getValue(self.data)
+        self.assertEqual(value, self.expectedValue, "The Value should match the expected value")
 
 # Collect all test cases in this class
-testcasesGetValue = ["retrieved"]
+testcasesGetValue = ["retrieved", "optionalValue"]
 suiteGetValue = unittest.TestSuite(map(getValue, testcasesGetValue))
 
 ##########################################################
