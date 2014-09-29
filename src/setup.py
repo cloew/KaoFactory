@@ -6,5 +6,6 @@ setup(name='kao_factory',
       author='Chris Loew',
       author_email='cloew123@gmail.com',
       #url='http://www.python.org/sigs/distutils-sig/',
-      packages=['kao_factory'],
+      packages=['kao_factory',
+                'kao_factory.Data'],
      )
