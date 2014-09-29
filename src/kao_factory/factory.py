@@ -7,6 +7,10 @@ class Factory:
         self.objectClass = objectClass
         self.parameters = parameters
         
+    def loadAll(self, dataList):
+        """ Load the object from the given data """
+        return [self.load(data) for data in dataList]
+        
     def load(self, data):
         """ Load the object from the given data """
         args = [parameter.getValue(data) for parameter in self.parameters]
