@@ -13,10 +13,14 @@ class DataSourceFactory(Factory):
         """ Load the object from the given data """
         data = self.findData(key)
         if data is not None:
-            return Factory.load(self, data)
+            return self.loadData(data)
         else:
             pass # Will want this to throw an exception
         return None
+        
+    def loadData(self, data):
+        """ Load the given data """
+        return Factory.load(self, data)
         
     def findData(self, key):
         """ Find the proper card JSON """
