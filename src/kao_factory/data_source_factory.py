@@ -24,7 +24,11 @@ class DataSourceFactory(Factory):
         
     def findData(self, key):
         """ Find the proper card JSON """
-        matchingData = [data for data in self.dataSource.data if data[self.searchField] == key]
+        matchingData = self.findMatchingData(key, self.searchField)
         if len(matchingData) > 0:
             return matchingData[0]
         return None
+        
+    def findMatchingData(self, key, field):
+        """ Find the JSON data that matches the key """
+        return [data for data in self.dataSource.data if data[field] == key]
