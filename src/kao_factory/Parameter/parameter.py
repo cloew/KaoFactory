@@ -1,3 +1,4 @@
+from kao_factory.Exception.missing_parameter_exception import MissingParameterException
 
 class Parameter:
     """ Represents a parameter """
@@ -14,4 +15,8 @@ class Parameter:
         elif self.optional:
             return self.defaultValue
         else:
-            pass # Probably want to throw an exception
+            raise MissingParameterException(self)
+            
+    def __repr__(self):
+        """ Return the String Representation """
+        return "{0} - {1}".format(self.__class__, self.field)
