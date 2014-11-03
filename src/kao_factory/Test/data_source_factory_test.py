@@ -1,9 +1,11 @@
 import unittest
 
 from kao_factory.data_source_factory import DataSourceFactory
+from kao_factory.Exception.build_failed_exception import BuildFailedException
 from kao_factory.Parameter.primitive_parameter import PrimitiveParameter
 from Test.dummy_class import DummyClass, parameters
 from Test.dummy_data_source import DummyDataSource
+from Test.error_parameter import ErrorParameter
 
 class load(unittest.TestCase):
     """ Test cases of load """
@@ -20,6 +22,7 @@ class load(unittest.TestCase):
         
         source = DummyDataSource([self.data])
         self.factory = DataSourceFactory(DummyClass, parameters, source, self.field)
+        self.errorFactory = DataSourceFactory(DummyClass, [ErrorParameter()], source, self.field)
         
     def dataFound(self):
         """ Test that the data can be properly found """
@@ -28,13 +31,17 @@ class load(unittest.TestCase):
         for key in self.expectedValues:
             self.assertEqual(getattr(result, key), self.data[key], "Each field on the result should match the value in the data")
         
+    def dataFound_ErrorLoading(self):
+        """ Test that the data can be properly found """
+        self.assertRaises(BuildFailedException, self.errorFactory.load, self.existingName)
+        
     def dataNotFound(self):
         """ Test that the data can be properly found """
         result = self.factory.load(self.nonExistingName)
         self.assertIsNone(result, "The result should not have been found or loaded")
 
 # Collect all test cases in this class
-testcasesLoad = ["dataFound", "dataNotFound"]
+testcasesLoad = ["dataFound", "dataFound_ErrorLoading", "dataNotFound"]
 suiteLoad = unittest.TestSuite(map(load, testcasesLoad))
 
 ##########################################################

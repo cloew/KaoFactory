@@ -23,4 +23,4 @@ class Factory:
             
     def __repr__(self):
         """ Return the String representation of the factory """
-        return "<Factory for {0}>".format(self.objectClass)
+        return "<{0} Factory>".format(self.objectClass)

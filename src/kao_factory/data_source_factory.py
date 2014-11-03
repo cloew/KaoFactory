@@ -1,4 +1,7 @@
 from factory import Factory
+from kao_factory.Exception.build_failed_exception import BuildFailedException
+
+import sys
 
 class DataSourceFactory(Factory):
     """ Represents a factory that acts as an entry point into some Data Source """
@@ -13,7 +16,10 @@ class DataSourceFactory(Factory):
         """ Load the object from the given data """
         data = self.findData(key)
         if data is not None:
-            return self.loadData(data)
+            try:
+                return self.loadData(data)
+            except Exception as e:
+                raise BuildFailedException("{0} load of {1}".format(self, key), e), None, sys.exc_info()[2]
         else:
             pass # Will want this to throw an exception
         return None
