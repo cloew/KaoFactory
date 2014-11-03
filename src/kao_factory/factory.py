@@ -1,3 +1,5 @@
+from kao_factory.Exception.build_failed_exception import BuildFailedException
+import sys
 
 class Factory:
     """ Represents a Factory to create objects of some class from data """
@@ -13,5 +15,12 @@ class Factory:
         
     def load(self, data):
         """ Load the object from the given data """
-        args = [parameter.getValue(data) for parameter in self.parameters]
-        return self.objectClass(*args)
+        try:
+            args = [parameter.getValue(data) for parameter in self.parameters]
+            return self.objectClass(*args)
+        except Exception as e:
+            raise BuildFailedException("{0} Failed: {1}".format(self, e)), None, sys.exc_info()[2]
+            
+    def __repr__(self):
+        """ Return the String representation of the factory """
+        return "<Factory for {1}>".format(self.objectClass)
