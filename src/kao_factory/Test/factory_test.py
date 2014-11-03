@@ -1,8 +1,10 @@
 import unittest
 
 from kao_factory.factory import Factory
+from kao_factory.Exception.build_failed_exception import BuildFailedException
 from kao_factory.Parameter.primitive_parameter import PrimitiveParameter
 from Test.dummy_class import DummyClass, parameters
+from Test.error_parameter import ErrorParameter
 
 class load(unittest.TestCase):
     """ Test cases of load """
@@ -17,9 +19,19 @@ class load(unittest.TestCase):
         object = self.factory.load(self.data)
         for key in self.data:
             self.assertEqual(getattr(object, key), self.data[key], "Each field on the object should match the value in the data")
+        
+    def exceptionThrown_Constructor(self):
+        """ Test that when there is an error in construction a Build Failed Exception is thrown """
+        self.factory = Factory(DummyClass, [])
+        self.assertRaises(BuildFailedException, self.factory.load, None)
+        
+    def exceptionThrown_Parameter(self):
+        """ Test that when there is an error in construction a Build Failed Exception is thrown """
+        self.factory = Factory(DummyClass, [ErrorParameter()])
+        self.assertRaises(BuildFailedException, self.factory.load, None)
 
 # Collect all test cases in this class
-testcasesLoad = ["loaded"]
+testcasesLoad = ["loaded", "exceptionThrown_Constructor", "exceptionThrown_Parameter"]
 suiteLoad = unittest.TestSuite(map(load, testcasesLoad))
 
 ##########################################################
