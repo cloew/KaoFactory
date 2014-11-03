@@ -19,7 +19,7 @@ class Factory:
             args = [parameter.getValue(data) for parameter in self.parameters]
             return self.objectClass(*args)
         except Exception as e:
-            raise BuildFailedException("{0} Failed: {1}".format(self, e)), None, sys.exc_info()[2]
+            raise BuildFailedException(self, e), None, sys.exc_info()[2]
             
     def __repr__(self):
         """ Return the String representation of the factory """
