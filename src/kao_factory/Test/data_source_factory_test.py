@@ -36,9 +36,8 @@ class load(unittest.TestCase):
         self.assertRaises(BuildFailedException, self.errorFactory.load, self.existingName)
         
     def dataNotFound(self):
-        """ Test that the data can be properly found """
-        result = self.factory.load(self.nonExistingName)
-        self.assertIsNone(result, "The result should not have been found or loaded")
+        """ Test that an exception is raised when the data cannot be found """
+        self.assertRaises(KeyError, self.factory.load, self.nonExistingName)
 
 # Collect all test cases in this class
 testcasesLoad = ["dataFound", "dataFound_ErrorLoading", "dataNotFound"]

@@ -21,7 +21,7 @@ class DataSourceFactory(Factory):
             except Exception as e:
                 raise BuildFailedException("{0} load of {1}".format(self, key), e), None, sys.exc_info()[2]
         else:
-            pass # Will want this to throw an exception
+            raise KeyError(key)
         return None
         
     def loadData(self, data):
