@@ -12,6 +12,10 @@ class DataSourceFactory(Factory):
         self.dataSource = dataSource
         self.searchField = searchField
         
+    def loadAll(self):
+        """ Load all items from the factory """
+        return [self.loadData(data) for data in self.dataSource.data]
+        
     def load(self, key):
         """ Load the object from the given data """
         data = self.findData(key)
