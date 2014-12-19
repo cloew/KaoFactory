@@ -6,7 +6,7 @@ import sys
 class DataSourceFactory(Factory):
     """ Represents a factory that acts as an entry point into some Data Source """
     
-    def __init__(self, objectClass, parameters, dataSource, searchField):
+    def __init__(self, objectClass, parameters, dataSource, searchField=None):
         """ Initialize the Data Source Factory """
         Factory.__init__(self, objectClass, parameters)
         self.dataSource = dataSource
