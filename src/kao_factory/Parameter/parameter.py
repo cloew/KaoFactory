@@ -1,3 +1,4 @@
+from future.utils import raise_with_traceback
 from kao_factory.Exception.build_failed_exception import BuildFailedException
 from kao_factory.Exception.missing_parameter_exception import MissingParameterException
 
@@ -18,7 +19,7 @@ class Parameter:
             try:
                 return self.__getvalue__(data)
             except Exception as e:
-                raise BuildFailedException(self, e), None, sys.exc_info()[2]
+                raise_with_traceback(BuildFailedException(self, e))
         elif self.optional:
             return self.defaultValue
         else:

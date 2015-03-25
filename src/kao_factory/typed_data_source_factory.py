@@ -1,5 +1,5 @@
-from data_source_factory import DataSourceFactory
-from typed_factory import TypedFactory
+from .data_source_factory import DataSourceFactory
+from .typed_factory import TypedFactory
 
 class TypedDataSourceFactory(DataSourceFactory):
     """ Represents a factory that acts as an entry point into some Data Source """

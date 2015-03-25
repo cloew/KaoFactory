@@ -1,4 +1,6 @@
-from factory import Factory
+from future.utils import raise_with_traceback
+
+from .factory import Factory
 from kao_factory.Exception.build_failed_exception import BuildFailedException
 
 import sys
@@ -23,7 +25,7 @@ class DataSourceFactory(Factory):
             try:
                 return self.loadData(data)
             except Exception as e:
-                raise BuildFailedException("{0} load of {1}".format(self, key), e), None, sys.exc_info()[2]
+                raise_with_traceback(BuildFailedException("{0} load of {1}".format(self, key), e))
         else:
             raise KeyError(key)
         return None

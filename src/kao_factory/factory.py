@@ -1,4 +1,5 @@
 from kao_factory.Exception.build_failed_exception import BuildFailedException
+from future.utils import raise_with_traceback
 import sys
 
 class Factory:
@@ -19,7 +20,7 @@ class Factory:
             args = [parameter.getValue(data) for parameter in self.parameters]
             return self.objectClass(*args)
         except Exception as e:
-            raise BuildFailedException(self, e), None, sys.exc_info()[2]
+            raise_with_traceback(BuildFailedException(self, e))
             
     def __repr__(self):
         """ Return the String representation of the factory """
