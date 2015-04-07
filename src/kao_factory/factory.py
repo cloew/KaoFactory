@@ -10,6 +10,10 @@ class Factory:
         self.objectClass = objectClass
         self.parameters = parameters
         
+    def addParameter(self, parameter):
+        """ Add the given parameter """
+        self.parameters.append(parameter)
+        
     def loadAll(self, dataList):
         """ Load the object from the given data """
         return [self.load(data) for data in dataList]
