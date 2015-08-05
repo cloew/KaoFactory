@@ -1,2 +1,4 @@
-from .data_source_factory import DataSourceFactory
+from .data_bound_factory import DataBoundFactory
+from .key_data_bound_factory import KeyDataBoundFactory
+from .Factory import Factory, TypedFactory
 from .Parameter import ComplexParameter, PrimitiveParameter

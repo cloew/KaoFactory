@@ -1,4 +1,4 @@
-from kao_factory.Exception.build_failed_exception import BuildFailedException
+from ..Exception.build_failed_exception import BuildFailedException
 from future.utils import raise_with_traceback
 import sys
 
