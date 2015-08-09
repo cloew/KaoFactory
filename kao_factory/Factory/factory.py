@@ -26,7 +26,7 @@ class Factory:
             args, kwargs = self.argsHelper.getArgs(data)
             return self.objectClass(*args, **kwargs)
         except TypeError as e:
-            raise_with_traceback(BuildFailedException(self, e))
+            raise BuildFailedException(self, e)
             
     def __repr__(self):
         """ Return the String representation of the factory """
