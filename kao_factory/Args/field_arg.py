@@ -4,12 +4,14 @@ from kao_factory.Exception.missing_parameter_exception import MissingParameterEx
 
 import sys
 
-class Parameter:
-    """ Represents a parameter """
+class FieldArg:
+    """ Represents a Factory Argument that is based on a Field """
     
-    def __init__(self, field, optional=False, default=None):
-        """ Initialize the Parameter """
+    def __init__(self, field, manipulator=None, optional=False, default=None):
+        """ Initialize the Arg with the field and an optional manipulator function to wrap the data """
         self.field = field
+        self.manipulator = manipulator
+        
         self.optional = optional
         self.defaultValue = default
         
@@ -17,7 +19,10 @@ class Parameter:
         """ Get the Primitive value from the data """
         if self.field in data:
             try:
-                return self.__getvalue__(data)
+                argData = data[self.field]
+                if manipulator is not None:
+                    argData = manipulator(argData)
+                return argData
             except Exception as e:
                 raise_with_traceback(BuildFailedException(self, e))
         elif self.optional:
