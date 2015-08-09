@@ -15,6 +15,10 @@ class FieldArg:
         self.optional = optional
         self.defaultValue = default
         
+    def isAvailable(self, data):
+        """ Return if this Argument is available in the data """
+        return self.field in data
+        
     def getValue(self, data):
         """ Get the Primitive value from the data """
         if self.field in data:

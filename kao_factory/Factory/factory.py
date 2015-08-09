@@ -5,14 +5,15 @@ import sys
 class Factory:
     """ Represents a Factory to create objects of some class from data """
     
-    def __init__(self, objectClass, parameters):
-        """ Initialize the Factory with the Object Class to create and the parameters to pass to the constructor """
+    def __init__(self, objectClass, *args, **kwargs):
+        """ Initialize the Factory with the Object Class to create and the Factory Arguments used to populate the constructor """
         self.objectClass = objectClass
-        self.parameters = parameters
+        self.args = args
+        self.kwargs = kwargs
         
-    def addParameter(self, parameter):
-        """ Add the given parameter """
-        self.parameters.append(parameter)
+    def addArg(self, arg):
+        """ Add the given arg. Useful for recursive Factories. """
+        self.args.append(arg)
         
     def loadAll(self, dataList):
         """ Load the object from the given data """
@@ -21,10 +22,33 @@ class Factory:
     def load(self, data):
         """ Load the object from the given data """
         try:
-            args = [parameter.getValue(data) for parameter in self.parameters]
-            return self.objectClass(*args)
+            args, kwargs = self.getArgs(data)
+            return self.objectClass(*args, **kwargs)
         except Exception as e:
             raise_with_traceback(BuildFailedException(self, e))
+            
+    def getArgs(self, data):
+        """ Return the arguments to call the constructor with """
+        return self.getPositionalArgs(data), self.getKwargs(data)
+        
+    def getPositionalArgs(self, data):
+        """ Return the positional arguments for this Factory and data """
+        args = []
+        missingArgs = []
+        for arg in self.args:
+            if not arg.isAvailable(data):
+                missingArgs.append(arg)
+            else:
+                args.append(arg.getValue(data))
+                
+        if len(missingArgs) > 0:
+            raise TypeError("{0} missing {1} required positional argument: {2}".format(self, len(missingArgs), ", ".join(["'{0}'".format(arg) for arg in missingArgs])))
+            
+        return args
+        
+    def getKwargs(self, data):
+        """ Return the keyword arguments for this Factory and data """
+        return {key:arg.getValue(data) for key, arg in self.kwargs.items() if arg.isAvailable(data)}
             
     def __repr__(self):
         """ Return the String representation of the factory """
