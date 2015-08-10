@@ -1,4 +1,6 @@
+from .add_load_args import add_load_args
 
+@add_load_args
 class TypedFactory:
     """ Represents a Factory to build differently depending on the value of a field in the data """
     

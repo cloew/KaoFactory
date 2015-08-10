@@ -1,9 +1,8 @@
 from .arguments_helper import ArgumentsHelper
+from .add_load_args import add_load_args
 from ..Exception.build_failed_exception import BuildFailedException
 
-from future.utils import raise_with_traceback
-import sys
-
+@add_load_args
 class Factory:
     """ Represents a Factory to create objects of some class from data """
     
