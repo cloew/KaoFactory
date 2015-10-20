@@ -1,7 +1,7 @@
 from distutils.core import setup
 
 setup(name='kao_factory',
-      version='0.4.1',
+      version='0.5.1',
       description='Python Factory Library',
       author='Chris Loew',
       author_email='cloew123@gmail.com',
